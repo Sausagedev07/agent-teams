@@ -1,0 +1,10 @@
+11 | Messerset | Küche
+12 | Ordner | Büro
+13 | Yogamatte | Sport
+14 | Laufschuhe | Sport
+15 | Springseil | Sport
+16 | Blumentopf | Garten
+17 | Rasenmäher | Garten
+18 | Bürostuhl | Büro
+19 | Rasenmäher | Garten
+20 | Messerset | Küche

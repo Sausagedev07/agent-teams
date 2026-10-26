@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: recherche-team-mit-modellen
+expected_outcome: |
+  Der Orchestrator startet drei Rechercheure mit Modell haiku im selben Turn (parallel), danach einen Prüfer mit Modell opus, und liefert einen zusammengefassten Bericht.

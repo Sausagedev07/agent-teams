@@ -1,0 +1,332 @@
+{
+  "date": "2026-10-26",
+  "orchestrator_model": "claude-sonnet-5-5 (main session)",
+  "methodology": {
+    "with_skill": "The main session loaded the skill and acted as orchestrator, spawning subagents with the Agent tool and a per-member model parameter.",
+    "baseline": "A single general-purpose subagent received the same prompt without the skill. Subagents have no Agent tool, so the baseline could not spawn a team and did all roles itself.",
+    "caveat": "Most assertions check team behaviour (right models, parallel start, order), so the baseline fails them by construction. The score shows that the skill makes real teams happen, not that a single agent produces worse text. Token counts per subagent are as reported by the harness and include each agent's fixed system-prompt overhead (~55-65k). The orchestrator's own tokens were not measured. 'Critical path' = sum over phases of the slowest member in that phase; it ignores orchestrator overhead between phases.",
+    "sample_size": "1 run per configuration per case (n=1). No variance estimate."
+  },
+  "cases": {
+    "recherche-team-mit-modellen": {
+      "title": "Research team: balcony solar power plants in Germany",
+      "prompt_de": "Bau mir ein Team: drei Agents recherchieren parallel je einen Aspekt von \"Vor- und Nachteile von Solarbalkonkraftwerken in Deutschland\" (Kosten, Recht/Anmeldung, Ertrag). Die Rechercheure sollen haiku sein, ein vierter Agent mit opus prüft die Ergebnisse gegen. Am Ende will ich einen kurzen Bericht von dir.",
+      "user_specified_models": true,
+      "team": [
+        {
+          "role": "recherche-kosten",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 79467,
+          "duration_ms": 51212,
+          "tool_uses": 12
+        },
+        {
+          "role": "recherche-recht",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 84665,
+          "duration_ms": 84424,
+          "tool_uses": 18
+        },
+        {
+          "role": "recherche-ertrag",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 90878,
+          "duration_ms": 99888,
+          "tool_uses": 21
+        },
+        {
+          "role": "gegenpruefer",
+          "model": "opus",
+          "phase": 2,
+          "tokens": 89039,
+          "duration_ms": 157515,
+          "tool_uses": 26
+        }
+      ],
+      "baseline": {
+        "tokens": 74508,
+        "duration_ms": 56474,
+        "tool_uses": 9
+      },
+      "notable_findings": [
+        "Opus checker corrected the payback period from 3.4-4.3 years to 4-8 years",
+        "Checker found that a claimed 4-month meter-swap deadline is not in the law (§ 10a EEG)",
+        "Checker corrected 'one device per household' (law allows several devices within the limits)"
+      ],
+      "grading": {
+        "with_skill_orchestrator": [
+          {
+            "text": "Es wurden drei Rechercheure mit dem Modell haiku gestartet",
+            "passed": true,
+            "evidence": "3 Agent-Aufrufe mit model=haiku"
+          },
+          {
+            "text": "Die drei Rechercheure wurden im selben Turn gestartet (parallel)",
+            "passed": true,
+            "evidence": "Alle drei in einem Turn, Hintergrund"
+          },
+          {
+            "text": "Ein vierter Agent mit dem Modell opus prüft die Ergebnisse der Rechercheure",
+            "passed": true,
+            "evidence": "Agent-Aufruf mit model=opus, lieferte Bestätigt/Korrigiert/Unsicher"
+          },
+          {
+            "text": "Der opus-Prüfer wurde erst nach den Rechercheuren gestartet und bekam deren Ergebnisse im Prompt",
+            "passed": true,
+            "evidence": "Gestartet nach Eingang aller drei Berichte, Ergebnisse im Prompt"
+          },
+          {
+            "text": "bericht.md fasst Kosten, Recht/Anmeldung und Ertrag zusammen",
+            "passed": true,
+            "evidence": "Alle drei Aspekte plus Strompreis und offene Punkte"
+          }
+        ],
+        "baseline_single_agent": [
+          {
+            "text": "Es wurden drei Rechercheure mit dem Modell haiku gestartet",
+            "passed": false,
+            "evidence": "Kein Agent-Tool, nichts gestartet"
+          },
+          {
+            "text": "Die drei Rechercheure wurden im selben Turn gestartet (parallel)",
+            "passed": false,
+            "evidence": "Nichts gestartet"
+          },
+          {
+            "text": "Ein vierter Agent mit dem Modell opus prüft die Ergebnisse der Rechercheure",
+            "passed": false,
+            "evidence": "Kein opus-Agent"
+          },
+          {
+            "text": "Der opus-Prüfer wurde erst nach den Rechercheuren gestartet und bekam deren Ergebnisse im Prompt",
+            "passed": false,
+            "evidence": "Kein Prüfer"
+          },
+          {
+            "text": "bericht.md fasst Kosten, Recht/Anmeldung und Ertrag zusammen",
+            "passed": true,
+            "evidence": "Bericht vorhanden, selbst recherchiert"
+          }
+        ]
+      }
+    },
+    "entwicklung-orchestrator-review": {
+      "title": "Dev team: Python CLI todo tool",
+      "prompt_de": "ich will ein kleines python-cli todo tool (add/list/done, json datei). mach ein team draus: einer plant, zwei setzen um (getrennte dateien), einer testet, am schluss ein review. nimm modelle wie du es sinnvoll findest und sag mir welche du nimmst",
+      "user_specified_models": false,
+      "team": [
+        {
+          "role": "planer",
+          "model": "opus",
+          "subagent_type": "Plan",
+          "phase": 1,
+          "tokens": 55303,
+          "duration_ms": 25471,
+          "tool_uses": 2
+        },
+        {
+          "role": "umsetzer-a (storage.py)",
+          "model": "sonnet",
+          "phase": 2,
+          "tokens": 67153,
+          "duration_ms": 20436,
+          "tool_uses": 2
+        },
+        {
+          "role": "umsetzer-b (cli.py)",
+          "model": "sonnet",
+          "phase": 2,
+          "tokens": 67947,
+          "duration_ms": 23624,
+          "tool_uses": 5
+        },
+        {
+          "role": "tester",
+          "model": "sonnet",
+          "phase": 3,
+          "tokens": 73325,
+          "duration_ms": 32923,
+          "tool_uses": 4
+        },
+        {
+          "role": "reviewer",
+          "model": "opus",
+          "phase": 4,
+          "tokens": 75864,
+          "duration_ms": 45964,
+          "tool_uses": 3
+        }
+      ],
+      "baseline": {
+        "tokens": 70120,
+        "duration_ms": 35788,
+        "tool_uses": 4
+      },
+      "notable_findings": [
+        "Reviewer found 2 medium issues: write errors ended in a traceback; a test named 'id never reused' did not test that promise",
+        "Orchestrator fixed both; test suite grew from 26 to 28 passing tests"
+      ],
+      "grading": {
+        "with_skill_orchestrator": [
+          {
+            "text": "Die Antwort nennt für jede Rolle das gewählte Modell",
+            "passed": true,
+            "evidence": "Tabelle in antwort.md"
+          },
+          {
+            "text": "Zwei Umsetzer wurden parallel gestartet und bekamen getrennte Dateien",
+            "passed": true,
+            "evidence": "2 Agents im selben Turn, storage.py vs. cli.py/__main__.py"
+          },
+          {
+            "text": "Reihenfolge: Planer, dann Umsetzer, dann Tester, dann Reviewer",
+            "passed": true,
+            "evidence": "So gestartet"
+          },
+          {
+            "text": "Das Todo-Tool unterstützt add, list und done mit JSON-Datei und läuft fehlerfrei",
+            "passed": true,
+            "evidence": "28 Tests grün, Beispielläufe geprüft"
+          },
+          {
+            "text": "Der Orchestrator hat das Ergebnis selbst geprüft (Code ausgeführt oder Dateien gelesen)",
+            "passed": true,
+            "evidence": "Tests und Beispielläufe selbst ausgeführt, Fixes selbst geprüft"
+          }
+        ],
+        "baseline_single_agent": [
+          {
+            "text": "Die Antwort nennt für jede Rolle das gewählte Modell",
+            "passed": false,
+            "evidence": "Nur geplante Modelle, keine genutzt"
+          },
+          {
+            "text": "Zwei Umsetzer wurden parallel gestartet und bekamen getrennte Dateien",
+            "passed": false,
+            "evidence": "Keine Agents gestartet"
+          },
+          {
+            "text": "Reihenfolge: Planer, dann Umsetzer, dann Tester, dann Reviewer",
+            "passed": false,
+            "evidence": "Alle Rollen nacheinander vom selben Agent gespielt"
+          },
+          {
+            "text": "Das Todo-Tool unterstützt add, list und done mit JSON-Datei und läuft fehlerfrei",
+            "passed": true,
+            "evidence": "6 Tests grün"
+          },
+          {
+            "text": "Der Orchestrator hat das Ergebnis selbst geprüft (Code ausgeführt oder Dateien gelesen)",
+            "passed": true,
+            "evidence": "Tests ausgeführt"
+          }
+        ]
+      }
+    },
+    "modell-nicht-angegeben": {
+      "title": "Bulk work: sort 40 products into 4 categories",
+      "prompt_de": "Ich muss 40 kurze Produktbeschreibungen in 4 Kategorien einsortieren (Küche, Garten, Sport, Büro) und danach noch einmal kritisch auf Fehler prüfen lassen. Setz dafür ein Agent-Team ein. Input: produkte.txt",
+      "user_specified_models": false,
+      "team": [
+        {
+          "role": "sortierer-1 (1-10)",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 66722,
+          "duration_ms": 8546,
+          "tool_uses": 4
+        },
+        {
+          "role": "sortierer-2 (11-20)",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 67919,
+          "duration_ms": 11898,
+          "tool_uses": 4
+        },
+        {
+          "role": "sortierer-3 (21-30)",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 66592,
+          "duration_ms": 10816,
+          "tool_uses": 3
+        },
+        {
+          "role": "sortierer-4 (31-40)",
+          "model": "haiku",
+          "phase": 1,
+          "tokens": 67241,
+          "duration_ms": 13423,
+          "tool_uses": 4
+        },
+        {
+          "role": "pruefer",
+          "model": "sonnet",
+          "phase": 2,
+          "tokens": 68479,
+          "duration_ms": 11397,
+          "tool_uses": 2
+        }
+      ],
+      "baseline": {
+        "tokens": 68863,
+        "duration_ms": 20576,
+        "tool_uses": 3
+      },
+      "notable_findings": [
+        "All 40 items assigned exactly once (11/9/11/9)",
+        "Sonnet checker found no errors and confirmed the 3 borderline items"
+      ],
+      "grading": {
+        "with_skill_orchestrator": [
+          {
+            "text": "Das Einsortieren übernehmen Agents mit haiku oder sonnet",
+            "passed": true,
+            "evidence": "4 Agents mit model=haiku"
+          },
+          {
+            "text": "Die kritische Prüfung übernimmt ein stärkeres Modell als die Worker (sonnet oder opus)",
+            "passed": true,
+            "evidence": "Prüfer model=sonnet, stärker als haiku-Worker"
+          },
+          {
+            "text": "Die Antwort nennt, welche Modelle gewählt wurden",
+            "passed": true,
+            "evidence": "antwort.md nennt haiku und sonnet"
+          },
+          {
+            "text": "einsortiert.md ordnet alle 40 Produkte genau einer der 4 Kategorien zu",
+            "passed": true,
+            "evidence": "Nachgezählt: 40 eindeutige Nummern, 11/9/11/9"
+          }
+        ],
+        "baseline_single_agent": [
+          {
+            "text": "Das Einsortieren übernehmen Agents mit haiku oder sonnet",
+            "passed": false,
+            "evidence": "Keine Agents gestartet, Subagent ohne Agent-Tool"
+          },
+          {
+            "text": "Die kritische Prüfung übernimmt ein stärkeres Modell als die Worker (sonnet oder opus)",
+            "passed": false,
+            "evidence": "Keine Agents"
+          },
+          {
+            "text": "Die Antwort nennt, welche Modelle gewählt wurden",
+            "passed": false,
+            "evidence": "Nur geplante Modelle genannt, keine genutzt"
+          },
+          {
+            "text": "einsortiert.md ordnet alle 40 Produkte genau einer der 4 Kategorien zu",
+            "passed": true,
+            "evidence": "Alle 40 zugeordnet"
+          }
+        ]
+      }
+    }
+  }
+}

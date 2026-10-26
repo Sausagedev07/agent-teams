@@ -1,0 +1,10 @@
+1 | Bürostuhl | Büro
+2 | Tacker | Büro
+3 | Schreibtischlampe | Büro
+4 | Hantelset | Sport
+5 | Rasenmäher | Garten
+6 | Wasserkocher | Küche
+7 | Toaster | Küche
+8 | Ordner | Büro
+9 | Wasserkocher | Küche
+10 | Toaster | Küche

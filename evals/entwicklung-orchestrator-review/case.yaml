@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: entwicklung-orchestrator-review
+expected_outcome: |
+  Der Orchestrator zeigt einen Teamplan mit Rolle und Modell je Mitglied, startet Planer, dann zwei Umsetzer parallel mit getrennten Dateien, dann Tester und Reviewer, prüft das Ergebnis selbst und liefert ein lauffähiges Tool.

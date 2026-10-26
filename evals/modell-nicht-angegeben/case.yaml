@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: modell-nicht-angegeben
+expected_outcome: |
+  Ohne Modellvorgabe wählt der Orchestrator sinnvoll: günstige Worker (haiku oder sonnet) für das Einsortieren in getrennten Ausschnitten, ein stärkeres Modell für die Prüfung, und nennt die Wahl.
+context:
+  scaffold_script: place-files.sh

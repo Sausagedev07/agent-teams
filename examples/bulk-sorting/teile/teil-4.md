@@ -1,0 +1,10 @@
+31 | Tacker | Büro
+32 | Hantelset | Sport
+33 | Edelstahl-Pfanne | Küche
+34 | Springseil | Sport
+35 | Heckenschere | Garten
+36 | Messerset | Küche
+37 | Laufschuhe | Sport
+38 | Blumentopf | Garten
+39 | Schreibtischlampe | Büro
+40 | Yogamatte | Sport

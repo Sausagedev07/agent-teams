@@ -1,0 +1,10 @@
+21 | Gartenschlauch | Garten
+22 | Blumentopf | Garten
+23 | Schreibtischlampe | Büro
+24 | Edelstahl-Pfanne | Küche
+25 | Laufschuhe | Sport
+26 | Wasserkocher | Küche
+27 | Toaster | Küche
+28 | Springseil | Sport
+29 | Hantelset | Sport
+30 | Heckenschere | Garten

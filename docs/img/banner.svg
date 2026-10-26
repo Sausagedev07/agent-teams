@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <title id="t">agent-teams</title>
+  <desc id="d">One orchestrator node branching into several teammate nodes, each in its own model color.</desc>
+  <rect width="1280" height="320" fill="#fbf8f3"/>
+  <rect x="0" y="0" width="12" height="320" fill="#264653"/>
+  <!-- text -->
+  <text x="72" y="150" font-size="76" font-weight="700" fill="#264653" letter-spacing="-1">agent-teams</text>
+  <text x="74" y="203" font-size="25" fill="#264653">One orchestrator. Many Claudes. A model per teammate.</text>
+  <g font-size="18" fill="#264653" opacity="0.75">
+    <circle cx="82" cy="250" r="7" fill="#2a9d8f"/><text x="98" y="256">haiku</text>
+    <circle cx="180" cy="250" r="7" fill="#e76f51"/><text x="196" y="256">sonnet</text>
+    <circle cx="292" cy="250" r="7" fill="#6d597a"/><text x="308" y="256">opus</text>
+  </g>
+  <!-- graphic -->
+  <g fill="none" stroke-width="4" stroke-linecap="round">
+    <path d="M870 160 C 960 160, 960 60, 1050 60" stroke="#2a9d8f"/>
+    <path d="M870 160 C 960 160, 960 110, 1050 110" stroke="#e76f51"/>
+    <path d="M870 160 C 960 160, 960 160, 1050 160" stroke="#6d597a"/>
+    <path d="M870 160 C 960 160, 960 210, 1050 210" stroke="#e76f51"/>
+    <path d="M870 160 C 960 160, 960 260, 1050 260" stroke="#2a9d8f"/>
+    <path d="M1050 110 C 1100 110, 1110 85, 1160 85" stroke="#e76f51" stroke-width="3" opacity="0.6"/>
+    <path d="M1050 110 C 1100 110, 1110 135, 1160 135" stroke="#e76f51" stroke-width="3" opacity="0.6"/>
+    <path d="M1050 260 C 1100 260, 1110 235, 1160 235" stroke="#2a9d8f" stroke-width="3" opacity="0.6"/>
+    <path d="M1050 260 C 1100 260, 1110 285, 1160 285" stroke="#2a9d8f" stroke-width="3" opacity="0.6"/>
+  </g>
+  <circle cx="850" cy="160" r="30" fill="#264653"/>
+  <circle cx="850" cy="160" r="12" fill="#fbf8f3"/>
+  <circle cx="1050" cy="60" r="16" fill="#2a9d8f"/>
+  <circle cx="1050" cy="110" r="16" fill="#e76f51"/>
+  <circle cx="1050" cy="160" r="16" fill="#6d597a"/>
+  <circle cx="1050" cy="210" r="16" fill="#e76f51"/>
+  <circle cx="1050" cy="260" r="16" fill="#2a9d8f"/>
+  <circle cx="1160" cy="85" r="9" fill="#e76f51"/>
+  <circle cx="1160" cy="135" r="9" fill="#e76f51"/>
+  <circle cx="1160" cy="235" r="9" fill="#2a9d8f"/>
+  <circle cx="1160" cy="285" r="9" fill="#2a9d8f"/>
+</svg>
