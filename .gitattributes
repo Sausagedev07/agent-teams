@@ -1,0 +1,6 @@
+# Language stats: the skill itself is Markdown. Benchmark scripts,
+# worked examples and eval fixtures are supporting material.
+*.md linguist-detectable
+benchmarks/** linguist-documentation
+examples/** linguist-documentation
+evals/** linguist-documentation
